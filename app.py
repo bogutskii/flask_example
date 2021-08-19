@@ -37,7 +37,7 @@ def create_post():
         try:
             db.session.add(article)
             db.session.commit()
-            return redirect('/')
+            return redirect('/posts')
         except:
             return 'INPUT ERROR!'
     else:
@@ -46,9 +46,25 @@ def create_post():
 
 @app.route('/posts')
 def posts():
-    articles = Article.query.order_by(Article.date).all()
-
+    articles = Article.query.order_by(Article.date.desc()).all()
     return render_template('posts.html', articles=articles)
+
+
+@app.route('/posts/<int:id>')
+def posts_detail(id):
+    article = Article.query.get(id)
+    return render_template('posts_detail.html', article=article)
+
+
+@app.route('/posts/<int:id>/delete')
+def posts_delete(id):
+    article = Article.query.get_or_404(id)
+    try:
+        db.session.delete(article)
+        db.session.commit()
+        return redirect('/posts')
+    except:
+        return "delete post Error!"
 
 
 @app.route('/about')
