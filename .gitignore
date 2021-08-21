@@ -4,12 +4,13 @@
 /.pnp
 .pnp.js
 .idea
+/.idea
 # testing
 /coverage
 
 # production
 /build
-
+/venv
 # misc
 .DS_Store
 .env.local
