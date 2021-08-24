@@ -72,5 +72,25 @@ def about():
     return render_template('about.html')
 
 
+@app.route('/posts/<int:id>/update', methods=['POST', 'GET'])
+def update_post(id):
+    if request.method == 'POST':
+        title = request.form['title']
+        intro = request.form['intro']
+        text = request.form['text']
+
+        article = Article(title=title, intro=intro, text=text)
+
+        try:
+            db.session.add(article)
+            db.session.commit()
+            return redirect('/posts')
+        except:
+            return 'INPUT ERROR!'
+    else:
+        article = Article.query.get(id)
+        return render_template('update_post.html', article=article)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
