@@ -4,6 +4,7 @@
 /.pnp
 .pnp.js
 .idea
+idea
 # testing
 /coverage
 /venv
