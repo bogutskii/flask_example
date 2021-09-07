@@ -12,7 +12,7 @@ bcrypt = Bcrypt(app)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///blogs.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SECRET_KEY"] = "denisdziganchuk"
+app.config["SECRET_KEY"] = "sect"
 db = SQLAlchemy(app)
 
 login_manager = LoginManager()
@@ -142,6 +142,11 @@ def login():
 def dashboard():
     return render_template('dashboard.html')
 
+@app.route("/logout", methods=["GET", "POST"])
+@login_required
+def logout():
+    return redirect(url_for('login'))
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -158,3 +163,4 @@ def register():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
