@@ -10,38 +10,16 @@ Registration
 
 <div class="login-page">
     <div class="form">
-        <!--    <form class="register-form" action="" method="POST">-->
-        <!--      <input type="text" placeholder="name"/>-->
-        <!--      <input type="password" placeholder="password"/>-->
-        <!--      <input type="text" placeholder="email address"/>-->
-        <!--      <button>create</button>-->
-        <!--      <p class="message">Already registered? <a href="#">Sign In</a></p>-->
 
-
-        <!--    </form>-->
         <form class="login-form" action="" method="POST">
             {{form.hidden_tag()}}
             {{form.username(class="input-field")}}
-            <!--      <input type="text" placeholder="username"/>-->
             {{form.password(class="input-field" )}}
-            <!--      <input type="password" placeholder="password"/>-->
-            <!--      <button type="submit">login</button>-->
             {{form.submit(class="button-submit")}}
 
             <p class="message">Already registered?<a href="{{url_for('login')}}">Sign In</a></p>
         </form>
     </div>
 </div>
-
-
-<!--<h1>Create an account</h1>-->
-
-<!--<form action="" method="POST">-->
-<!--    {{form.hidden_tag()}}-->
-<!--    {{form.username}}-->
-<!--    {{form.password}}-->
-<!--    {{form.submit}}-->
-<!--</form>-->
-<!--<a href="{{url_for('login')}}">Log in</a>-->
 
 {% endblock %}

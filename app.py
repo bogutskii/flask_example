@@ -31,6 +31,7 @@ class Article(db.Model):
     intro = db.Column(db.String(300), nullable=False)
     text = db.Column(db.Text, nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow)
+    # author = db.Column(db.String, default='Guest')
 
 
 class User(db.Model, UserMixin):
@@ -67,7 +68,7 @@ def create_post():
         title = request.form['title']
         intro = request.form['intro']
         text = request.form['text']
-
+        # author = current_user.username
         article = Article(title=title, intro=intro, text=text)
 
         try:
