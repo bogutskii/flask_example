@@ -2,3 +2,11 @@ body{
 background: white
 }
 
+.border-b{
+display: inline-block;
+    background-color: transparent;
+    border: 1px solid #41464b;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-radius: .25rem;
+}
