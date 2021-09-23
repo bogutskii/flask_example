@@ -11,8 +11,10 @@
     <div class="alert alert-info">
         <p>{{article.text}}</p>
         <p><b>DATE: {{article.date.date()}}</b></p>
+         {% if current_user.username|length > 0%}
         <a href="/posts/{{article.id}}/delete" class="btn btn-danger"> Delete</a>
         <a href="/posts/{{article.id}}/update" class="btn btn-info"> Edit</a>
+         {% endif %}
     </div>
 
 </div>

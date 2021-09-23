@@ -31,7 +31,6 @@ class Article(db.Model):
     intro = db.Column(db.String(300), nullable=False)
     text = db.Column(db.Text, nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow)
-    # author = db.Column(db.String, default='Guest')
 
 
 class User(db.Model, UserMixin):
@@ -63,12 +62,12 @@ def hello():
 
 
 @app.route('/create_post', methods=['POST', 'GET'])
+@login_required
 def create_post():
     if request.method == 'POST':
         title = request.form['title']
         intro = request.form['intro']
         text = request.form['text']
-        # author = current_user.username
         article = Article(title=title, intro=intro, text=text)
 
         try:
@@ -94,6 +93,7 @@ def posts_detail(id):
 
 
 @app.route('/posts/<int:id>/delete')
+@login_required
 def posts_delete(id):
     article = Article.query.get_or_404(id)
     try:
@@ -110,6 +110,7 @@ def about():
 
 
 @app.route('/posts/<int:id>/update', methods=['POST', 'GET'])
+@login_required
 def update_post(id):
     article = Article.query.get(id)
     if request.method == 'POST':

@@ -11,11 +11,11 @@ Posts
     {% if articles|length > 0%}
     {% for post in articles %}
     <div class="alert alert-info">
-        <h2>{{post.title}}</h2>
+        <h2><a href="/posts/{{post.id}}"> {{post.title}}</a></h2>
         <p>{{post.intro}}</p>
         <p><b>DATE: {{post.date.date()}}</b></p>
-<!--        <p><b>author: {{post.author}}</b></p>-->
-        <a href="/posts/{{post.id}}" class="btn btn-warning"> More</a>
+        <!--        <p><b>author: {{post.author}}</b></p>-->
+
     </div>
     {% endfor %}
     {%else %}
