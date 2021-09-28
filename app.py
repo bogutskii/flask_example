@@ -165,6 +165,14 @@ def register():
     return render_template("registration.html", form=form)
 
 
+@app.route("/user/<username>")
+def profile(username):
+    user = User.query.filter_by(username=username).first()
+    if user:
+        return render_template("profile.html", user=user)
+    return render_template("user_not_found.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
 
