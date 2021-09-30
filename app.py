@@ -172,6 +172,14 @@ def profile(username):
         return render_template("profile.html", user=user)
     return render_template("user_not_found.html")
 
+@app.route("/settings")
+@login_required
+def profile_settings():
+    # user = User.query.filter_by(username=username).first()
+    # if user:
+    return render_template("profile_settings.html")
+    # return render_template("user_not_found.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
