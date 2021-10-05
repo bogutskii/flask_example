@@ -26,20 +26,28 @@ def load_user(user_id):
 
 
 class Article(db.Model):
+    __tablename__ = "article"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(300), nullable=False)
     intro = db.Column(db.String(300), nullable=False)
     text = db.Column(db.Text, nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow)
+    author = db.Column(db.String(20), nullable=False)
+
+
+def __repr__(self):
+    return "<Article %r>" % self.id
 
 
 class User(db.Model, UserMixin):
+    __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False)
     password = db.Column(db.String(50), nullable=False)
 
 
 class RegisterForm(FlaskForm):
+    __tablename__ = "registerform"
     username = StringField(validators=[InputRequired(), Length(min=3, max=20)], render_kw={"placeholder": "Username"})
     password = PasswordField(validators=[InputRequired(), Length(min=3, max=20)], render_kw={"placeholder": "Password"})
     submit = SubmitField("Register")
@@ -51,6 +59,7 @@ class RegisterForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
+    __tablename__ = "loginform"
     username = StringField(validators=[InputRequired(), Length(min=3, max=20)], render_kw={"placeholder": "Username"})
     password = PasswordField(validators=[InputRequired(), Length(min=3, max=20)], render_kw={"placeholder": "Password"})
     submit = SubmitField("Login")
@@ -68,7 +77,8 @@ def create_post():
         title = request.form['title']
         intro = request.form['intro']
         text = request.form['text']
-        article = Article(title=title, intro=intro, text=text)
+        author = current_user.username
+        article = Article(title=title, intro=intro, author=author, text=text)
 
         try:
             db.session.add(article)
@@ -117,6 +127,7 @@ def update_post(id):
         article.title = request.form['title']
         article.intro = request.form['intro']
         article.text = request.form['text']
+        article.author = current_user.username
         try:
             db.session.commit()
             return redirect('/posts')
@@ -171,6 +182,7 @@ def profile(username):
     if user:
         return render_template("profile.html", user=user)
     return render_template("user_not_found.html")
+
 
 @app.route("/settings")
 @login_required
