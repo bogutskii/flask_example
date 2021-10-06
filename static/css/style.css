@@ -33,7 +33,9 @@ display: inline-block;
   font-size: 45px;
 }
 
-
+.lft-mg5{
+margin-left: 10px
+}
 
 /* Style the tab */
 .tab {
