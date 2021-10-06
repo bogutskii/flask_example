@@ -25,7 +25,7 @@ myInput.onkeyup = function() {
     letter.classList.add("invalid");
 }
 
-  // Validate capital letters
+  // Validate ----------capital letters
   let upperCaseLetters = /[A-Z]/g;
   if(myInput.value.match(upperCaseLetters)) {
     capital.classList.remove("invalid");
