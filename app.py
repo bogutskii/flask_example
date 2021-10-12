@@ -66,8 +66,9 @@ class LoginForm(FlaskForm):
 
 
 @app.route('/')
-def hello():
-    return render_template('index.html')
+def index():
+    user_list = User.query.order_by('username').all()
+    return render_template('index.html', user_list=user_list)
 
 
 @app.route('/create_post', methods=['POST', 'GET'])
