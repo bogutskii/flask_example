@@ -8,7 +8,7 @@ Main page from base
 {% block body %}
 <div class="container">
     {% for user in user_list %}
-    <p>{{user.username}}</p>
+    <p><a href="/user/{{user.username}}">{{user.username}}</a></p>
     {% endfor %}
 
 
