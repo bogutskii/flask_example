@@ -65,6 +65,12 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Login")
 
 
+class DeleteUser(FlaskForm):
+    __tablename__ = "deleteuser"
+    password = PasswordField(validators=[InputRequired(), Length(min=3, max=20)], render_kw={"placeholder": "Password"})
+    submit = SubmitField("deleteUser")
+
+
 @app.route('/')
 def index():
     user_list = User.query.order_by('username').all()
@@ -176,7 +182,6 @@ def register():
         return redirect(url_for("login"))
     return render_template("registration.html", form=form)
 
-
 @app.route("/user/<username>")
 def profile(username):
     user = User.query.filter_by(username=username).first()
@@ -185,13 +190,33 @@ def profile(username):
     return render_template("user_not_found.html")
 
 
-@app.route("/settings")
+@app.route("/settings/delete_account", methods=["GET", "POST"])
+@login_required
+def user_delete():
+    if request.method == "POST":
+        user = User.query.get_or_404(current_user.id)
+        try:
+            db.session.delete(user)
+            db.session.commit()
+            return redirect("/")
+        except:
+            return "Error deleting user"
+    return "Access denied"
+
+
+@app.route("/settings",  methods=["GET", "POST"])
 @login_required
 def profile_settings():
-    # user = User.query.filter_by(username=username).first()
-    # if user:
-    return render_template("profile_settings.html")
-    # return render_template("user_not_found.html")
+    form = DeleteUser()
+    if form.validate_on_submit():
+        user = User.query.get(current_user.username)
+        print(current_user.username)
+        if user:
+            if bcrypt.check_password_hash(user.password, form.password.data):
+                user_delete()
+                return redirect(url_for('login'))
+    return render_template("profile_settings.html", form=form)
+
 
 
 if __name__ == "__main__":
@@ -199,3 +224,4 @@ if __name__ == "__main__":
 
 # import request
 # response = response.get('https://randomuser.me.api')
+
